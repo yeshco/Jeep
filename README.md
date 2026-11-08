@@ -64,13 +64,6 @@ Also:
 - **Login item:** a new install offers **Open Jeep at login** already checked in the welcome; it is registered only when you click **Start Jeep**, and you can uncheck it there or turn it off later in Settings. Only offered when Jeep is in an Applications folder. Updating keeps your existing choice.
 - **Network:** none. Jeep has no network code and listens on no ports.
 
-Builds that are not signed with a Developer ID lose the Automation and Accessibility grants when the app is updated. Remove Jeep from each list and add it again, or reset them:
-
-```sh
-tccutil reset AppleEvents com.yeshaya.Jeep
-tccutil reset Accessibility com.yeshaya.Jeep
-```
-
 ## Your data
 
 - **Preferences** (`com.yeshaya.Jeep`): your settings, the profile labels you type, the last active window id, and the hidden-window record (Safari window ids and frames, written before every hide so a crash can be repaired). A native-name cache stores verified Safari profile names and window ids with Safari's process id and launch date; names are not reused across Safari lifetimes. With several Jeep windows, which window ids belong together (and each one's position) is stored with Safari's process id and launch date, and dropped when Safari restarts. No page titles or URLs.
