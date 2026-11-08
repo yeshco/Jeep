@@ -1,0 +1,27 @@
+.build*/
+.swiftpm/
+.DS_Store
+Release/
+
+# Local icon keywords and iCloud conflict copies
+Support/IconKeywords.local.json
+* 2.*
+* 2/
+
+# Secrets
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.pem
+*.p8
+*.p12
+*.key
+*.mobileprovision
+.signing-identity
+*.local.xcconfig
+!.env.example
+!.dev.vars.example
+
+# iCloud conflict copies without an extension ("LICENSE 2", ".gitattributes 2").
+* 2
