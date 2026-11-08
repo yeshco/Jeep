@@ -4,6 +4,16 @@ A macOS menu-bar app that makes Safari profiles feel like one window.
 
 Jeep keeps exactly one Safari profile window on-screen. The other profile windows stay open but hidden — not minimized, and out of Mission Control — so their tabs, cookies, and extensions are untouched. A small floating profile bar attaches to the visible window; click a profile to swap it into the same position and size.
 
+![Jeep's bar just above a Safari window: the Jeep, then the Personal, Work, and Study profiles, with Work selected](docs/bar-above-safari.png)
+
+When there is room, the bar sits just above Safari.
+
+![With Safari at the top of the screen, the bar is a blue rail on the left of the page, below the tab bar, opened to show the profiles](docs/rail-over-safari.png)
+
+When there isn't, it becomes a rail over the page, shown here opened on hover.
+
+*Jeep's own bar, rendered with sample profiles; the Safari window is illustrative.*
+
 ## Install
 
 1. Open `Jeep-<version>.dmg` from Releases and drag **Jeep** onto **Applications**.
