@@ -4,6 +4,8 @@ A macOS menu-bar app that makes Safari profiles feel like one window.
 
 Jeep keeps exactly one Safari profile window on-screen. The other profile windows stay open but hidden — not minimized, and out of Mission Control — so their tabs, cookies, and extensions are untouched. A small floating profile bar attaches to the visible window; click a profile to swap it into the same position and size.
 
+It's an attempt to bring back Arc's quick profile switcher: in Arc, every profile lived in the same window, one click apart. Safari gives each profile its own window; Jeep makes them behave like one, with the switcher attached.
+
 ![Jeep's bar just above a Safari window: the Jeep, then the Personal, Work, and Study profiles, with Work selected](docs/bar-above-safari.png)
 
 When there is room, the bar sits just above Safari.
@@ -59,9 +61,6 @@ Also:
 
 - **Login item:** a new install offers **Open Jeep at login** already checked in the welcome; it is registered only when you click **Start Jeep**, and you can uncheck it there or turn it off later in Settings. Only offered when Jeep is in an Applications folder. Updating keeps your existing choice.
 - **Network:** none. Jeep has no network code and listens on no ports.
-- **Screen Recording:** not requested. Jeep reads Safari's window positions from the window server, never window contents or titles from it.
-- **Private API:** native profile-name lookup uses optional `_AXUIElementGetWindow` to associate Safari's Accessibility controls with an exact window id. Unavailable lookup leaves the window unidentified rather than guessing. The optional **Bring the window to the current Space** setting uses private window-server functions (`CGSMoveWindowsToManagedSpace`); it is off by default and falls back to switching Spaces when unavailable. When a profile you choose is on another Space, Jeep switches you there by focusing its window through private window-server functions (`CGSCopySpacesForWindows`, `CGSCopyManagedDisplaySpaces`, `_SLPSSetFrontProcessWithOptions`, `SLPSPostEventRecordTo`); without them the window is shown on its own Space and you stay where you are.
-- **Files written:** `~/Library/Logs/Jeep/journal.jsonl` (and `journal.previous.jsonl`), plus Jeep's preferences (`com.yeshaya.Jeep`).
 
 Builds that are not signed with a Developer ID lose the Automation and Accessibility grants when the app is updated. Remove Jeep from each list and add it again, or reset them:
 
@@ -73,7 +72,6 @@ tccutil reset Accessibility com.yeshaya.Jeep
 ## Your data
 
 - **Preferences** (`com.yeshaya.Jeep`): your settings, the profile labels you type, the last active window id, and the hidden-window record (Safari window ids and frames, written before every hide so a crash can be repaired). A native-name cache stores verified Safari profile names and window ids with Safari's process id and launch date; names are not reused across Safari lifetimes. With several Jeep windows, which window ids belong together (and each one's position) is stored with Safari's process id and launch date, and dropped when Safari restarts. No page titles or URLs.
-- **Journal** (`~/Library/Logs/Jeep/journal.jsonl`): a local diagnostic log of window events, capped at 8 MB with one previous file kept. New entries hold window ids, visibility, frames, and error messages. Window titles are blanked and native profile names are removed before writing; URLs are never read. Older builds may have stored titles or title prefixes, and upgrading does not erase existing logs. **Settings → Troubleshooting → Activity log** shows them in Finder.
 - Nothing leaves your Mac.
 
 ## Uninstall / recovery
@@ -81,12 +79,6 @@ tccutil reset Accessibility com.yeshaya.Jeep
 Quitting Jeep attempts to reveal every Safari window. **Pause Jeep** does the same without quitting. **Resume Jeep** re-hides the others when the remembered window is already visible, without moving it or activating Safari. If that window is hidden, select a profile explicitly to show it.
 
 Jeep records which windows it may hide before hiding them, so that after a crash or force-quit its next launch can reveal them. If that record cannot be saved (for example, the disk is full), Jeep hides nothing and says so. Partial inventories retain unresolved records. The record is cleared after Safari quits or three consecutive close-confirmation inventories are empty, each re-checking the recorded ids; WindowServer emptiness alone is not enough. Recovery is still best effort: if a reveal fails, Jeep keeps the record and reports the error. **Show All Safari Windows (Emergency)** bypasses ordinary switching state, cancels queued switches, reveals the recorded windows in place, and leaves Jeep paused.
-
-**Without Jeep** (for example, it was deleted while windows were hidden), reveal every Safari window from Terminal. macOS asks once whether Terminal may control Safari:
-
-```sh
-osascript -e 'tell application "Safari" to set visible of every window to true'
-```
 
 To remove Jeep completely:
 
