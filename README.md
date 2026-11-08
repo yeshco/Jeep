@@ -6,6 +6,8 @@ Jeep keeps exactly one Safari profile window on-screen. The other profile window
 
 It's an attempt to bring back Arc's quick profile switcher: in Arc, every profile lived in the same window, one click apart. Safari gives each profile its own window; Jeep makes them behave like one, with the switcher attached.
 
+Jeep is a personal, vibe-coded project.
+
 ![Jeep's bar just above a Safari window: the Jeep, then the Personal, Work, and Study profiles, with Work selected](docs/bar-above-safari.png)
 
 When there is room, the bar sits just above Safari.
